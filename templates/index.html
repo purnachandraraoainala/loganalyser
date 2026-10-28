@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogAnalyser — Upload</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────────── -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="8" y1="13" x2="16" y2="13"/>
+            <line x1="8" y1="17" x2="16" y2="17"/>
+          </svg>
+        </div>
+        <span class="brand-name">Log<strong>Analyser</strong></span>
+      </a>
+      <nav class="nav-links">
+        <span class="nav-tag">v1.0</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Main content ────────────────────────────────────────── -->
+  <main class="upload-page">
+
+    <!-- Left column: hero copy -->
+    <div class="hero-col">
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        Intelligent Log Analysis
+      </div>
+      <h1 class="hero-title">
+        Understand your<br/>
+        logs <span class="hero-highlight">instantly</span>
+      </h1>
+      <p class="hero-desc">
+        Upload any log file and get a complete picture in seconds —
+        visual charts, error breakdowns, full-text search, and one-click export.
+        No configuration. No sign-up.
+      </p>
+
+      <ul class="feature-list">
+        <li>
+          <span class="feat-icon feat-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </span>
+          <div><strong>Auto-parse</strong> Apache, Nginx, syslog, ISO &amp; generic formats</div>
+        </li>
+        <li>
+          <span class="feat-icon feat-purple">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </span>
+          <div><strong>Visual charts</strong> for level distribution at a glance</div>
+        </li>
+        <li>
+          <span class="feat-icon feat-green">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <div><strong>Full-text search</strong> and level filter with pagination</div>
+        </li>
+        <li>
+          <span class="feat-icon feat-amber">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </span>
+          <div><strong>Export</strong> filtered results as CSV or JSON</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right column: upload card -->
+    <div class="upload-col">
+      <div class="upload-card" id="dropzone">
+
+        <div class="dropzone-body" id="dropzoneBody">
+          <div class="dz-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 16 12 12 8 16"/>
+              <line x1="12" y1="12" x2="12" y2="21"/>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+            </svg>
+          </div>
+          <p class="dz-title">Drag &amp; drop your log file</p>
+          <p class="dz-sub">or click the button below to browse</p>
+
+          <label class="btn-browse" for="fileInput">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Select File
+          </label>
+          <input type="file" id="fileInput" accept=".log,.txt,.csv" hidden />
+
+          <p class="dz-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Supports <code>.log</code> &middot; <code>.txt</code> &middot; <code>.csv</code> &nbsp;&mdash;&nbsp; max 50 MB
+          </p>
+        </div>
+
+        <!-- Progress state (shown during upload) -->
+        <div class="upload-progress hidden" id="progressPanel">
+          <div class="up-filename" id="upFilename">filename.log</div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="up-meta">
+            <span id="progressLabel">Uploading…</span>
+            <span id="progressPct">0%</span>
+          </div>
+        </div>
+
+      </div><!-- /upload-card -->
+
+      <!-- Status toast -->
+      <div class="toast hidden" id="statusToast"></div>
+
+      <!-- Accepted formats -->
+      <div class="format-chips">
+        <span class="chip chip-blue">Apache/Nginx</span>
+        <span class="chip chip-purple">Syslog</span>
+        <span class="chip chip-green">ISO timestamp</span>
+        <span class="chip chip-amber">Generic level</span>
+      </div>
+    </div><!-- /upload-col -->
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>
